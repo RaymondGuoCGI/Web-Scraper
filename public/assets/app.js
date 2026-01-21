@@ -132,6 +132,10 @@ const renderAssessment = async () => {
     .join("");
 };
 
+const renderPractice = async () => {
+  // Placeholder for practice rendering.
+};
+
 const renderConcepts = async () => {
   const conceptList = document.getElementById("conceptList");
   if (!conceptList) {
@@ -204,6 +208,10 @@ const renderCurrentPage = () => {
 
   if (page.dataset.page === "concepts") {
     renderConcepts();
+  }
+
+  if (page.dataset.page === "practice") {
+    renderPractice();
   }
 };
 
