@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Module Detail</title>
+    <title>Module Quiz</title>
     <link rel="stylesheet" href="assets/styles.css" />
   </head>
   <body>
@@ -28,15 +28,17 @@
       </div>
     </header>
 
-    <main class="page" data-page="module">
-      <h1>Module Detail</h1>
-      <div class="module-actions">
-        <a class="button" href="quiz.html?id=" data-template="quiz.html?id=">Start Quiz</a>
+    <main class="page" data-page="quiz">
+      <h1>Module Quiz</h1>
+      <p class="lead">Answer the questions and submit to get your score.</p>
+      <form id="quizForm" class="quiz-form"></form>
+      <div class="quiz-actions">
+        <button class="button" id="quizSubmit" type="button">Submit</button>
       </div>
-      <div id="moduleDetail" class="module-detail"></div>
+      <div id="quizResult" class="card"></div>
     </main>
 
-    <footer class="site-footer">Module details, exercises, and projects.</footer>
+    <footer class="site-footer">Scores are saved locally.</footer>
     <script src="assets/app.js"></script>
   </body>
 </html>

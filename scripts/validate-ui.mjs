@@ -8,6 +8,7 @@ const requiredFiles = [
   "public/assessment.html",
   "public/practice.html",
   "public/module.html",
+  "public/quiz.html",
   "public/assets/styles.css",
   "public/assets/app.js"
 ];
@@ -31,6 +32,7 @@ assert.ok(appJs.includes("renderModule("), "Missing renderModule()");
 assert.ok(appJs.includes("applyI18n("), "Missing applyI18n()");
 assert.ok(appJs.includes("<details"), "Missing details blocks");
 assert.ok(appJs.includes("solution"), "Missing solution rendering");
+assert.ok(appJs.includes("renderQuiz("), "Missing renderQuiz()");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
@@ -51,6 +53,11 @@ assert.ok(practiceHtml.includes("id=\"practiceList\""), "Missing id=\"practiceLi
 const moduleHtml = fs.readFileSync("public/module.html", "utf8");
 assert.ok(moduleHtml.includes("data-page=\"module\""), "Missing data-page=\"module\"");
 assert.ok(moduleHtml.includes("id=\"moduleDetail\""), "Missing id=\"moduleDetail\"");
+assert.ok(moduleHtml.includes("quiz.html?id="), "Missing quiz link in module.html");
+
+const quizHtml = fs.readFileSync("public/quiz.html", "utf8");
+assert.ok(quizHtml.includes("data-page=\"quiz\""), "Missing data-page=\"quiz\"");
+assert.ok(quizHtml.includes("id=\"quizForm\""), "Missing id=\"quizForm\"");
 
 const indexHtml = fs.readFileSync("public/index.html", "utf8");
 assert.ok(indexHtml.includes("practice.html"), "Missing practice link in index.html");

@@ -420,6 +420,76 @@ const renderModule = async () => {
       <div class="concept-grid">${projectItems}</div>
     </section>
   `;
+
+  const quizLink = document.querySelector("[data-template='quiz.html?id=']");
+  if (quizLink) {
+    quizLink.setAttribute("href", `quiz.html?id=${moduleData.id}`);
+  }
+};
+
+const renderQuiz = async () => {
+  const quizForm = document.getElementById("quizForm");
+  const quizResult = document.getElementById("quizResult");
+  const quizSubmit = document.getElementById("quizSubmit");
+  if (!quizForm || !quizResult || !quizSubmit) {
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const moduleId = params.get("id");
+
+  const quizzes = await loadJson(["../data/quizzes.json", "data/quizzes.json"]);
+  if (!quizzes) {
+    quizForm.innerHTML = "<div class=\"card\">Failed to load quiz.</div>";
+    return;
+  }
+
+  const quiz = quizzes.find((item) => item.module_id === moduleId) || quizzes[0];
+  if (!quiz) {
+    quizForm.innerHTML = "<div class=\"card\">Quiz not found.</div>";
+    return;
+  }
+
+  const lang = getLanguage();
+  quizForm.innerHTML = quiz.items
+    .map((item, index) => {
+      const question = lang === "en" ? item.question_en : item.question_zh;
+      const options = lang === "en" ? item.options_en : item.options_zh;
+      const optionsMarkup = options
+        .map((opt, optIndex) => {
+          return `
+            <label class="quiz-option">
+              <input type="radio" name="q${index}" value="${optIndex}" />
+              <span>${opt}</span>
+            </label>
+          `;
+        })
+        .join("");
+      return `
+        <div class="quiz-question">
+          <h3>${index + 1}. ${question}</h3>
+          <div class="quiz-options">${optionsMarkup}</div>
+        </div>
+      `;
+    })
+    .join("");
+
+  quizSubmit.onclick = () => {
+    let correct = 0;
+    quiz.items.forEach((item, index) => {
+      const selected = quizForm.querySelector(`input[name=\"q${index}\"]:checked`);
+      if (selected && parseInt(selected.value, 10) === item.answer) {
+        correct += 1;
+      }
+    });
+
+    const total = quiz.items.length;
+    const score = total ? Math.round((correct / total) * 100) : 0;
+    const scoreKey = `quiz:${moduleId || "default"}`;
+    localStorage.setItem(scoreKey, String(score));
+
+    quizResult.innerHTML = `<strong>Score:</strong> ${score}% (${correct}/${total})`;
+  };
 };
 
 const renderCurrentPage = () => {
@@ -446,6 +516,10 @@ const renderCurrentPage = () => {
 
   if (page.dataset.page === "module") {
     renderModule();
+  }
+
+  if (page.dataset.page === "quiz") {
+    renderQuiz();
   }
 };
 
