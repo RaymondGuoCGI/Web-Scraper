@@ -1,2 +1,147 @@
 [
+  {
+    "id": "fundamentals",
+    "title_zh": "基础抓取",
+    "title_en": "Fundamentals of Web Scraping",
+    "time_estimate": "2-3 hours",
+    "concepts": [
+      {
+        "id": "http-request-response",
+        "title_zh": "请求与响应",
+        "title_en": "Request and Response",
+        "summary_zh": "理解 URL、请求方法、响应状态码与内容类型。",
+        "summary_en": "Understand URLs, request methods, status codes, and content types.",
+        "pitfalls_zh": "忽略状态码或内容类型会导致解析失败。",
+        "pitfalls_en": "Ignoring status codes or content types leads to parsing failures.",
+        "use_cases_zh": "诊断爬取失败、定位重定向与访问限制。",
+        "use_cases_en": "Diagnose crawl failures, redirects, and access limits.",
+        "terms": [
+          { "zh": "状态码", "en": "status code" },
+          { "zh": "内容类型", "en": "content type" }
+        ]
+      },
+      {
+        "id": "robots-and-ethics",
+        "title_zh": "robots 与合规",
+        "title_en": "robots and Compliance",
+        "summary_zh": "理解 robots.txt 的作用与合规边界。",
+        "summary_en": "Understand robots.txt and compliance boundaries.",
+        "pitfalls_zh": "把 robots 当成技术限制而非合规提示。",
+        "pitfalls_en": "Treating robots as a technical block instead of a compliance hint.",
+        "use_cases_zh": "制定爬取策略与访问频率。",
+        "use_cases_en": "Set crawl policy and access rates.",
+        "terms": [
+          { "zh": "爬取频率", "en": "crawl rate" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "id": "status-code-check",
+        "title_zh": "检查响应状态码",
+        "title_en": "Check Response Status",
+        "prompt_zh": "给定一组 URL，输出每个 URL 的状态码。",
+        "prompt_en": "Given a list of URLs, output the status code for each.",
+        "input_example": "[\"https://example.com\", \"https://httpstat.us/404\"]",
+        "output_example": "[{\"url\":...,\"status\":200},{\"url\":...,\"status\":404}]",
+        "hints_zh": "注意超时与重定向的处理。",
+        "hints_en": "Handle timeouts and redirects."
+      },
+      {
+        "id": "content-type-filter",
+        "title_zh": "过滤 HTML 内容",
+        "title_en": "Filter HTML Content",
+        "prompt_zh": "仅保留 Content-Type 为 text/html 的响应。",
+        "prompt_en": "Keep only responses with Content-Type text/html.",
+        "input_example": "[{\"url\":...,\"contentType\":...}]",
+        "output_example": "[{\"url\":...,\"contentType\":\"text/html\"}]",
+        "hints_zh": "有些站点会带 charset 参数。",
+        "hints_en": "Some sites append charset parameters."
+      }
+    ],
+    "projects": [
+      {
+        "id": "news-aggregator",
+        "type": "practical",
+        "title_zh": "资讯聚合器",
+        "title_en": "News Aggregator",
+        "requirements_zh": [
+          "抓取 3 个来源的标题与链接",
+          "去重并按时间排序",
+          "输出为 JSON"
+        ],
+        "requirements_en": [
+          "Fetch titles and links from 3 sources",
+          "Deduplicate and sort by time",
+          "Output JSON"
+        ],
+        "acceptance_zh": [
+          "至少 30 条有效数据",
+          "无重复标题",
+          "字段齐全"
+        ],
+        "acceptance_en": [
+          "At least 30 valid items",
+          "No duplicate titles",
+          "All fields present"
+        ],
+        "challenges_zh": [
+          "页面结构不一致",
+          "时间格式不同"
+        ],
+        "challenges_en": [
+          "Inconsistent page structures",
+          "Different time formats"
+        ],
+        "extensions_zh": [
+          "加入关键词过滤",
+          "每日定时抓取"
+        ],
+        "extensions_en": [
+          "Add keyword filtering",
+          "Schedule daily fetches"
+        ]
+      },
+      {
+        "id": "retry-rate-limit",
+        "type": "technical",
+        "title_zh": "限速与重试",
+        "title_en": "Rate Limit and Retries",
+        "requirements_zh": [
+          "实现固定间隔的请求节流",
+          "对 429/5xx 进行重试",
+          "记录失败日志"
+        ],
+        "requirements_en": [
+          "Implement fixed-interval throttling",
+          "Retry on 429/5xx",
+          "Log failures"
+        ],
+        "acceptance_zh": [
+          "可配置重试次数",
+          "最大重试后正确失败"
+        ],
+        "acceptance_en": [
+          "Configurable retry count",
+          "Fails correctly after max retries"
+        ],
+        "challenges_zh": [
+          "避免重试风暴",
+          "处理指数退避"
+        ],
+        "challenges_en": [
+          "Avoid retry storms",
+          "Handle exponential backoff"
+        ],
+        "extensions_zh": [
+          "加入随机抖动",
+          "支持并发限速"
+        ],
+        "extensions_en": [
+          "Add jitter",
+          "Support concurrency limits"
+        ]
+      }
+    ]
+  }
 ]
