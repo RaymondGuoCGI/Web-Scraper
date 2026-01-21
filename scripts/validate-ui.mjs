@@ -14,4 +14,8 @@ for (const file of requiredFiles) {
   assert.ok(fs.existsSync(file), `Missing ${file}`);
 }
 
+const appJs = fs.readFileSync("public/assets/app.js", "utf8");
+assert.ok(appJs.includes("setLanguage("), "Missing setLanguage()");
+assert.ok(appJs.includes("localStorage"), "Missing localStorage usage");
+
 console.log("OK");

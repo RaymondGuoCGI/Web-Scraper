@@ -171,3 +171,8 @@ body {
     padding: 28px;
   }
 }
+.toggle.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
