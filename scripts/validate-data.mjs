@@ -11,6 +11,8 @@ for (const file of requiredFiles) {
   assert.ok(fs.existsSync(file), `Missing ${file}`);
 }
 
+assert.ok(fs.existsSync("docs/data-model.md"), "Missing docs/data-model.md");
+
 function readJson(path) {
   return JSON.parse(fs.readFileSync(path, "utf8"));
 }
