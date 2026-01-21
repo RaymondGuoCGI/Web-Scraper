@@ -8,6 +8,7 @@ const requiredFiles = [
   "public/assessment.html",
   "public/practice.html",
   "public/module.html",
+  "public/quiz.html",
   "public/assets/styles.css",
   "public/assets/app.js"
 ];
@@ -29,6 +30,10 @@ assert.ok(appJs.includes("renderPractice("), "Missing renderPractice()");
 assert.ok(appJs.includes("practiceList"), "Missing practiceList usage");
 assert.ok(appJs.includes("renderModule("), "Missing renderModule()");
 assert.ok(appJs.includes("applyI18n("), "Missing applyI18n()");
+assert.ok(appJs.includes("<details"), "Missing details blocks");
+assert.ok(appJs.includes("solution"), "Missing solution rendering");
+assert.ok(appJs.includes("renderQuiz("), "Missing renderQuiz()");
+assert.ok(appJs.includes("renderProgress("), "Missing renderProgress()");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
@@ -37,6 +42,7 @@ assert.ok(pathHtml.includes("module.html?id="), "Missing module detail link in p
 
 const assessmentHtml = fs.readFileSync("public/assessment.html", "utf8");
 assert.ok(assessmentHtml.includes("data-page=\"assessment\""), "Missing data-page=\"assessment\"");
+assert.ok(assessmentHtml.includes("id=\"progressBoard\""), "Missing id=\"progressBoard\"");
 
 const conceptsHtml = fs.readFileSync("public/concepts.html", "utf8");
 assert.ok(conceptsHtml.includes("data-page=\"concepts\""), "Missing data-page=\"concepts\"");
@@ -49,6 +55,11 @@ assert.ok(practiceHtml.includes("id=\"practiceList\""), "Missing id=\"practiceLi
 const moduleHtml = fs.readFileSync("public/module.html", "utf8");
 assert.ok(moduleHtml.includes("data-page=\"module\""), "Missing data-page=\"module\"");
 assert.ok(moduleHtml.includes("id=\"moduleDetail\""), "Missing id=\"moduleDetail\"");
+assert.ok(moduleHtml.includes("quiz.html?id="), "Missing quiz link in module.html");
+
+const quizHtml = fs.readFileSync("public/quiz.html", "utf8");
+assert.ok(quizHtml.includes("data-page=\"quiz\""), "Missing data-page=\"quiz\"");
+assert.ok(quizHtml.includes("id=\"quizForm\""), "Missing id=\"quizForm\"");
 
 const indexHtml = fs.readFileSync("public/index.html", "utf8");
 assert.ok(indexHtml.includes("practice.html"), "Missing practice link in index.html");

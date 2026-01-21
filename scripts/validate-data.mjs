@@ -20,6 +20,7 @@ function readJson(path) {
 const modules = readJson("data/modules.json");
 assert.ok(Array.isArray(modules), "modules.json must be an array");
 assert.ok(modules.length > 0, "Expected at least 1 module");
+assert.ok(modules.length >= 4, "Expected at least 4 modules");
 
 const requiredModuleKeys = [
   "id",
@@ -38,9 +39,11 @@ for (const mod of modules) {
   assert.ok(Array.isArray(mod.concepts), "concepts must be array");
   assert.ok(Array.isArray(mod.exercises), "exercises must be array");
   assert.ok(Array.isArray(mod.projects), "projects must be array");
+  for (const ex of mod.exercises) {
+    assert.ok(ex.solution_zh, "Missing solution_zh");
+    assert.ok(ex.solution_en, "Missing solution_en");
+  }
 }
-
-assert.ok(modules.length >= 2, "Expected at least 2 modules");
 
 const moduleIds = new Set(modules.map((m) => m.id));
 
