@@ -270,3 +270,29 @@ a.module-card {
   text-decoration: none;
   color: inherit;
 }
+.exercise-details {
+  margin-top: 12px;
+  background: rgba(255, 255, 255, 0.75);
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.exercise-details summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.exercise-details pre {
+  background: #f7f3ee;
+  padding: 8px;
+  border-radius: 10px;
+  overflow-x: auto;
+}

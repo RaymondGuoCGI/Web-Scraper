@@ -197,10 +197,31 @@ const renderPractice = async () => {
         .map((ex) => {
           const title = lang === "en" ? ex.title_en : ex.title_zh;
           const prompt = lang === "en" ? ex.prompt_en : ex.prompt_zh;
+          const hintLabel = lang === "en" ? "Hints" : "提示";
+          const solutionLabel = lang === "en" ? "Solution" : "参考解法";
+          const inputLabel = lang === "en" ? "Input" : "输入";
+          const outputLabel = lang === "en" ? "Output" : "输出";
+          const hints = lang === "en" ? ex.hints_en : ex.hints_zh;
+          const solution = lang === "en" ? ex.solution_en : ex.solution_zh;
           return `
             <article class="exercise-card">
               <h3>${title}</h3>
               <p>${prompt}</p>
+              <details class="exercise-details">
+                <summary>${hintLabel}</summary>
+                <div class="detail-grid">
+                  <div>
+                    <strong>${inputLabel}:</strong>
+                    <pre>${ex.input_example}</pre>
+                  </div>
+                  <div>
+                    <strong>${outputLabel}:</strong>
+                    <pre>${ex.output_example}</pre>
+                  </div>
+                </div>
+                <p>${hints}</p>
+                <p><strong>${solutionLabel}:</strong> ${solution}</p>
+              </details>
             </article>
           `;
         })
@@ -341,10 +362,27 @@ const renderModule = async () => {
     .map((ex) => {
       const title = lang === "en" ? ex.title_en : ex.title_zh;
       const prompt = lang === "en" ? ex.prompt_en : ex.prompt_zh;
+      const hints = lang === "en" ? ex.hints_en : ex.hints_zh;
+      const solution = lang === "en" ? ex.solution_en : ex.solution_zh;
       return `
         <div class="card">
           <h3>${title}</h3>
           <p>${prompt}</p>
+          <details class="exercise-details">
+            <summary>${lang === "en" ? "Details" : "细节"}</summary>
+            <div class="detail-grid">
+              <div>
+                <strong>${lang === "en" ? "Input" : "输入"}:</strong>
+                <pre>${ex.input_example}</pre>
+              </div>
+              <div>
+                <strong>${lang === "en" ? "Output" : "输出"}:</strong>
+                <pre>${ex.output_example}</pre>
+              </div>
+            </div>
+            <p>${hints}</p>
+            <p><strong>${lang === "en" ? "Solution" : "参考解法"}:</strong> ${solution}</p>
+          </details>
         </div>
       `;
     })

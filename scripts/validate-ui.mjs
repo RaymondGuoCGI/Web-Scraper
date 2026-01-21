@@ -29,6 +29,8 @@ assert.ok(appJs.includes("renderPractice("), "Missing renderPractice()");
 assert.ok(appJs.includes("practiceList"), "Missing practiceList usage");
 assert.ok(appJs.includes("renderModule("), "Missing renderModule()");
 assert.ok(appJs.includes("applyI18n("), "Missing applyI18n()");
+assert.ok(appJs.includes("<details"), "Missing details blocks");
+assert.ok(appJs.includes("solution"), "Missing solution rendering");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
