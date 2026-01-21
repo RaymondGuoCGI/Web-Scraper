@@ -45,7 +45,9 @@
         "input_example": "[\"https://example.com\", \"https://httpstat.us/404\"]",
         "output_example": "[{\"url\":...,\"status\":200},{\"url\":...,\"status\":404}]",
         "hints_zh": "注意超时与重定向的处理。",
-        "hints_en": "Handle timeouts and redirects."
+        "hints_en": "Handle timeouts and redirects.",
+        "solution_zh": "使用 requests/fetch 请求 URL，读取 status 或 response.statusCode。",
+        "solution_en": "Use requests/fetch, read status/statusCode from the response."
       },
       {
         "id": "content-type-filter",
@@ -56,7 +58,9 @@
         "input_example": "[{\"url\":...,\"contentType\":...}]",
         "output_example": "[{\"url\":...,\"contentType\":\"text/html\"}]",
         "hints_zh": "有些站点会带 charset 参数。",
-        "hints_en": "Some sites append charset parameters."
+        "hints_en": "Some sites append charset parameters.",
+        "solution_zh": "判断 content-type 是否以 text/html 开头，支持 charset。",
+        "solution_en": "Check if content-type starts with text/html, including charset."
       }
     ],
     "projects": [
@@ -189,7 +193,9 @@
         "input_example": "<ul><li class=\"course\">A</li></ul>",
         "output_example": "[\"A\"]",
         "hints_zh": "尽量避免使用过长的层级选择器。",
-        "hints_en": "Avoid overly deep selectors."
+        "hints_en": "Avoid overly deep selectors.",
+        "solution_zh": "用 .course 选择器提取文本并去空白。",
+        "solution_en": "Use .course selector, read text, and trim."
       },
       {
         "id": "clean-whitespace",
@@ -200,7 +206,9 @@
         "input_example": "\"  Hello\n\nWorld \"",
         "output_example": "\"Hello\nWorld\"",
         "hints_zh": "先 trim，再合并连续空格。",
-        "hints_en": "Trim first, then collapse whitespace."
+        "hints_en": "Trim first, then collapse whitespace.",
+        "solution_zh": "用正则合并空白并标准化换行。",
+        "solution_en": "Use regex to collapse whitespace and normalize newlines."
       }
     ],
     "projects": [
@@ -282,6 +290,302 @@
         "extensions_en": [
           "Add rule test cases",
           "Output extraction quality report"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "requests-sessions",
+    "title_zh": "请求与会话",
+    "title_en": "Requests and Sessions",
+    "time_estimate": "3-4 hours",
+    "concepts": [
+      {
+        "id": "headers-cookies",
+        "title_zh": "请求头与 Cookies",
+        "title_en": "Headers and Cookies",
+        "summary_zh": "通过请求头和 Cookie 模拟真实访问。",
+        "summary_en": "Use headers and cookies to mimic real browsers.",
+        "pitfalls_zh": "缺少 User-Agent 或 Cookie 会被拦截。",
+        "pitfalls_en": "Missing User-Agent or cookies may trigger blocks.",
+        "use_cases_zh": "登录态保持与会话复用。",
+        "use_cases_en": "Maintain login state and reuse sessions.",
+        "terms": [
+          { "zh": "会话", "en": "session" },
+          { "zh": "Cookie", "en": "cookie" }
+        ]
+      },
+      {
+        "id": "retry-timeout",
+        "title_zh": "超时与重试策略",
+        "title_en": "Timeouts and Retries",
+        "summary_zh": "为不稳定网络设置超时与重试。",
+        "summary_en": "Set timeouts and retry strategies for unstable networks.",
+        "pitfalls_zh": "无限重试会导致阻塞与封禁。",
+        "pitfalls_en": "Infinite retries cause stalls and bans.",
+        "use_cases_zh": "稳定抓取与错误恢复。",
+        "use_cases_en": "Stable crawling and recovery.",
+        "terms": [
+          { "zh": "超时", "en": "timeout" },
+          { "zh": "重试", "en": "retry" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "id": "session-reuse",
+        "title_zh": "会话复用",
+        "title_en": "Session Reuse",
+        "prompt_zh": "用同一会话连续请求多个页面。",
+        "prompt_en": "Request multiple pages with a single session.",
+        "input_example": "[\"/page1\", \"/page2\"]",
+        "output_example": "[200, 200]",
+        "hints_zh": "保持 cookie 与连接复用。",
+        "hints_en": "Keep cookies and reuse connections.",
+        "solution_zh": "创建 session 实例并循环请求 URL。",
+        "solution_en": "Create a session instance and loop requests."
+      },
+      {
+        "id": "timeout-backoff",
+        "title_zh": "超时与退避",
+        "title_en": "Timeout and Backoff",
+        "prompt_zh": "请求失败时按退避策略重试。",
+        "prompt_en": "Retry with backoff when requests fail.",
+        "input_example": "{\"url\":\"/slow\"}",
+        "output_example": "{\"attempts\":3,\"success\":true}",
+        "hints_zh": "指数退避 + 最大重试次数。",
+        "hints_en": "Use exponential backoff and max retries.",
+        "solution_zh": "失败后按 1s, 2s, 4s 退避重试。",
+        "solution_en": "Retry with 1s, 2s, 4s backoff."
+      }
+    ],
+    "projects": [
+      {
+        "id": "login-simulator",
+        "type": "practical",
+        "title_zh": "登录态模拟",
+        "title_en": "Login Session Simulator",
+        "requirements_zh": [
+          "维护登录 Cookie",
+          "抓取用户中心信息",
+          "支持会话过期重登"
+        ],
+        "requirements_en": [
+          "Maintain login cookies",
+          "Fetch user dashboard data",
+          "Re-login on session expiration"
+        ],
+        "acceptance_zh": [
+          "登录成功后返回正确字段",
+          "失败时有清晰日志"
+        ],
+        "acceptance_en": [
+          "Correct fields after login",
+          "Clear logs on failure"
+        ],
+        "challenges_zh": [
+          "验证码或二次验证",
+          "Cookie 更新"
+        ],
+        "challenges_en": [
+          "CAPTCHA or 2FA",
+          "Cookie rotation"
+        ],
+        "extensions_zh": [
+          "支持多账号轮换",
+          "本地缓存会话"
+        ],
+        "extensions_en": [
+          "Support account rotation",
+          "Cache sessions locally"
+        ]
+      },
+      {
+        "id": "retry-pipeline",
+        "type": "technical",
+        "title_zh": "重试管道",
+        "title_en": "Retry Pipeline",
+        "requirements_zh": [
+          "对失败任务入队",
+          "限制重试次数",
+          "统计失败原因"
+        ],
+        "requirements_en": [
+          "Queue failed tasks",
+          "Limit retry count",
+          "Track failure reasons"
+        ],
+        "acceptance_zh": [
+          "失败任务可追踪",
+          "总体重试成功率可统计"
+        ],
+        "acceptance_en": [
+          "Failed tasks traceable",
+          "Retry success rate measurable"
+        ],
+        "challenges_zh": [
+          "失败原因分类",
+          "重试与限速联动"
+        ],
+        "challenges_en": [
+          "Failure categorization",
+          "Retry and rate limit coupling"
+        ],
+        "extensions_zh": [
+          "失败任务报警",
+          "支持不同重试策略"
+        ],
+        "extensions_en": [
+          "Alert on failures",
+          "Support multiple retry policies"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "concurrency-performance",
+    "title_zh": "并发与性能",
+    "title_en": "Concurrency and Performance",
+    "time_estimate": "3-5 hours",
+    "concepts": [
+      {
+        "id": "async-batching",
+        "title_zh": "异步与批处理",
+        "title_en": "Async and Batching",
+        "summary_zh": "用异步或批处理提高吞吐量。",
+        "summary_en": "Use async or batching to increase throughput.",
+        "pitfalls_zh": "并发过高会触发封禁。",
+        "pitfalls_en": "Too much concurrency triggers bans.",
+        "use_cases_zh": "大规模抓取与任务调度。",
+        "use_cases_en": "Large scale crawling and scheduling.",
+        "terms": [
+          { "zh": "并发", "en": "concurrency" },
+          { "zh": "批处理", "en": "batching" }
+        ]
+      },
+      {
+        "id": "queue-limits",
+        "title_zh": "队列与限流",
+        "title_en": "Queues and Rate Limits",
+        "summary_zh": "用队列控制速度与失败重试。",
+        "summary_en": "Use queues to control rate and retries.",
+        "pitfalls_zh": "缺乏限流会造成压垮目标站。",
+        "pitfalls_en": "No rate limits can overload targets.",
+        "use_cases_zh": "稳定大规模抓取。",
+        "use_cases_en": "Stable large-scale scraping.",
+        "terms": [
+          { "zh": "队列", "en": "queue" },
+          { "zh": "限流", "en": "rate limit" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "id": "async-fetch",
+        "title_zh": "异步抓取",
+        "title_en": "Async Fetch",
+        "prompt_zh": "并发抓取 10 个 URL 并汇总结果。",
+        "prompt_en": "Fetch 10 URLs concurrently and aggregate results.",
+        "input_example": "[\"/a\", \"/b\"]",
+        "output_example": "[{\"url\":\"/a\",\"status\":200}]",
+        "hints_zh": "控制最大并发数。",
+        "hints_en": "Limit max concurrency.",
+        "solution_zh": "使用协程/Promise.all + 限流器。",
+        "solution_en": "Use coroutines/Promise.all with a limiter."
+      },
+      {
+        "id": "queue-worker",
+        "title_zh": "任务队列",
+        "title_en": "Task Queue",
+        "prompt_zh": "将抓取任务入队并限速执行。",
+        "prompt_en": "Queue crawl tasks and process with rate limits.",
+        "input_example": "[\"/1\",\"/2\"]",
+        "output_example": "{\"processed\":2}",
+        "hints_zh": "消费者/生产者模型。",
+        "hints_en": "Producer/consumer pattern.",
+        "solution_zh": "用队列控制速率与重试。",
+        "solution_en": "Use a queue to control rate and retries."
+      }
+    ],
+    "projects": [
+      {
+        "id": "price-monitor",
+        "type": "practical",
+        "title_zh": "价格监控器",
+        "title_en": "Price Monitor",
+        "requirements_zh": [
+          "定时抓取商品价格",
+          "价格变动通知",
+          "存储历史记录"
+        ],
+        "requirements_en": [
+          "Scheduled price checks",
+          "Notify on changes",
+          "Store history"
+        ],
+        "acceptance_zh": [
+          "支持多个商品",
+          "有变动记录"
+        ],
+        "acceptance_en": [
+          "Support multiple items",
+          "Change history recorded"
+        ],
+        "challenges_zh": [
+          "页面加载延迟",
+          "反爬限速"
+        ],
+        "challenges_en": [
+          "Page load latency",
+          "Anti-scraping rate limits"
+        ],
+        "extensions_zh": [
+          "支持邮件/微信通知",
+          "异常波动提醒"
+        ],
+        "extensions_en": [
+          "Email/IM alerts",
+          "Anomaly alerts"
+        ]
+      },
+      {
+        "id": "distributed-crawler",
+        "type": "technical",
+        "title_zh": "分布式爬虫",
+        "title_en": "Distributed Crawler",
+        "requirements_zh": [
+          "任务分片与分发",
+          "多节点并发抓取",
+          "集中式日志"
+        ],
+        "requirements_en": [
+          "Shard and dispatch tasks",
+          "Multi-node crawling",
+          "Centralized logging"
+        ],
+        "acceptance_zh": [
+          "节点可扩展",
+          "任务无重复"
+        ],
+        "acceptance_en": [
+          "Scalable nodes",
+          "No duplicate tasks"
+        ],
+        "challenges_zh": [
+          "任务去重",
+          "节点故障恢复"
+        ],
+        "challenges_en": [
+          "Task deduplication",
+          "Node failure recovery"
+        ],
+        "extensions_zh": [
+          "分布式队列",
+          "监控仪表盘"
+        ],
+        "extensions_en": [
+          "Distributed queue",
+          "Monitoring dashboard"
         ]
       }
     ]
