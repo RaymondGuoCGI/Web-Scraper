@@ -95,6 +95,11 @@ const loadJson = async (paths) => {
   return null;
 };
 
+const getQuizScore = (moduleId) => {
+  const score = localStorage.getItem(`quiz:${moduleId}`);
+  return score ? parseInt(score, 10) : null;
+};
+
 const renderPath = async () => {
   const grid = document.getElementById("moduleGrid");
   if (!grid) {
@@ -139,6 +144,8 @@ const renderAssessment = async () => {
     return;
   }
 
+  renderProgress(modules);
+
   const lang = getLanguage();
   rubricList.innerHTML = rubrics.dimensions
     .map((dim) => {
@@ -166,6 +173,31 @@ const renderAssessment = async () => {
         <article class="module-card">
           <h3>${title}</h3>
           <div class="module-meta">Questions: ${count}</div>
+        </article>
+      `;
+    })
+    .join("");
+};
+
+const renderProgress = (modules) => {
+  const progressBoard = document.getElementById("progressBoard");
+  if (!progressBoard) {
+    return;
+  }
+
+  const lang = getLanguage();
+  progressBoard.innerHTML = modules
+    .map((mod) => {
+      const title = lang === "en" ? mod.title_en : mod.title_zh;
+      const score = getQuizScore(mod.id);
+      const passedQuiz = score !== null && score >= 70;
+      const badge = passedQuiz ? (lang === "en" ? "Badge Earned" : "已获徽章") : (lang === "en" ? "No Badge" : "未获徽章");
+      const scoreText = score === null ? (lang === "en" ? "Not taken" : "未测验") : `${score}%`;
+      return `
+        <article class="module-card">
+          <h3>${title}</h3>
+          <div class="module-meta">Quiz: ${scoreText}</div>
+          <div class="badge">${badge}</div>
         </article>
       `;
     })

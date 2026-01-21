@@ -33,6 +33,7 @@ assert.ok(appJs.includes("applyI18n("), "Missing applyI18n()");
 assert.ok(appJs.includes("<details"), "Missing details blocks");
 assert.ok(appJs.includes("solution"), "Missing solution rendering");
 assert.ok(appJs.includes("renderQuiz("), "Missing renderQuiz()");
+assert.ok(appJs.includes("renderProgress("), "Missing renderProgress()");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
@@ -41,6 +42,7 @@ assert.ok(pathHtml.includes("module.html?id="), "Missing module detail link in p
 
 const assessmentHtml = fs.readFileSync("public/assessment.html", "utf8");
 assert.ok(assessmentHtml.includes("data-page=\"assessment\""), "Missing data-page=\"assessment\"");
+assert.ok(assessmentHtml.includes("id=\"progressBoard\""), "Missing id=\"progressBoard\"");
 
 const conceptsHtml = fs.readFileSync("public/concepts.html", "utf8");
 assert.ok(conceptsHtml.includes("data-page=\"concepts\""), "Missing data-page=\"concepts\"");
