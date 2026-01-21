@@ -225,3 +225,38 @@ body {
   color: var(--accent-dark);
   font-size: 12px;
 }
+.practice-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.practice-section h2 {
+  font-family: var(--font-display);
+  margin-bottom: 12px;
+}
+
+.practice-block {
+  margin: 16px 0 24px;
+}
+
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.exercise-card,
+.project-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.project-card ul {
+  padding-left: 18px;
+  margin: 8px 0 0;
+  color: var(--muted);
+}

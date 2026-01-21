@@ -133,7 +133,73 @@ const renderAssessment = async () => {
 };
 
 const renderPractice = async () => {
-  // Placeholder for practice rendering.
+  const practiceList = document.getElementById("practiceList");
+  if (!practiceList) {
+    return;
+  }
+
+  const modules = await loadJson(["../data/modules.json", "data/modules.json"]);
+  if (!modules) {
+    practiceList.innerHTML = "<div class=\"card\">Failed to load practice.</div>";
+    return;
+  }
+
+  const lang = getLanguage();
+  practiceList.innerHTML = modules
+    .map((mod) => {
+      const moduleTitle = lang === "en" ? mod.title_en : mod.title_zh;
+      const exercises = mod.exercises || [];
+      const projects = mod.projects || [];
+      const practical = projects.filter((p) => p.type === "practical");
+      const technical = projects.filter((p) => p.type === "technical");
+
+      const exerciseCards = exercises
+        .map((ex) => {
+          const title = lang === "en" ? ex.title_en : ex.title_zh;
+          const prompt = lang === "en" ? ex.prompt_en : ex.prompt_zh;
+          return `
+            <article class="exercise-card">
+              <h3>${title}</h3>
+              <p>${prompt}</p>
+            </article>
+          `;
+        })
+        .join("");
+
+      const renderProject = (project) => {
+        const title = lang === "en" ? project.title_en : project.title_zh;
+        const reqs = lang === "en" ? project.requirements_en : project.requirements_zh;
+        const reqItems = (reqs || []).map((item) => `<li>${item}</li>`).join("");
+        return `
+          <article class="project-card">
+            <h3>${title}</h3>
+            <ul>${reqItems}</ul>
+          </article>
+        `;
+      };
+
+      const practicalCards = practical.map(renderProject).join("");
+      const technicalCards = technical.map(renderProject).join("");
+
+      return `
+        <section class="practice-section">
+          <h2>${moduleTitle}</h2>
+          <div class="practice-block">
+            <h3>${lang === "en" ? "Exercises" : "练习"}</h3>
+            <div class="practice-grid">${exerciseCards}</div>
+          </div>
+          <div class="practice-block">
+            <h3>${lang === "en" ? "Practical Projects" : "实用型项目"}</h3>
+            <div class="practice-grid">${practicalCards}</div>
+          </div>
+          <div class="practice-block">
+            <h3>${lang === "en" ? "Technical Projects" : "技术型项目"}</h3>
+            <div class="practice-grid">${technicalCards}</div>
+          </div>
+        </section>
+      `;
+    })
+    .join("");
 };
 
 const renderConcepts = async () => {
