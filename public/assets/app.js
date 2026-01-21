@@ -82,6 +82,56 @@ const renderPath = async () => {
     .join("");
 };
 
+const renderAssessment = async () => {
+  const rubricList = document.getElementById("rubricList");
+  const quizSummary = document.getElementById("quizSummary");
+  if (!rubricList || !quizSummary) {
+    return;
+  }
+
+  const rubrics = await loadJson(["../data/rubrics.json", "data/rubrics.json"]);
+  const quizzes = await loadJson(["../data/quizzes.json", "data/quizzes.json"]);
+  const modules = await loadJson(["../data/modules.json", "data/modules.json"]);
+
+  if (!rubrics || !quizzes || !modules) {
+    rubricList.innerHTML = "<div class=\"card\">Failed to load rubrics.</div>";
+    quizSummary.innerHTML = "<div class=\"card\">Failed to load quizzes.</div>";
+    return;
+  }
+
+  const lang = getLanguage();
+  rubricList.innerHTML = rubrics.dimensions
+    .map((dim) => {
+      const title = lang === "en" ? dim.title_en : dim.title_zh;
+      const levelCount = Array.isArray(dim.levels) ? dim.levels.length : 0;
+      return `
+        <div class="card">
+          <h3>${title}</h3>
+          <div class="module-meta">Levels: ${levelCount}</div>
+        </div>
+      `;
+    })
+    .join("");
+
+  const quizCounts = quizzes.reduce((acc, quiz) => {
+    acc[quiz.module_id] = (acc[quiz.module_id] || 0) + quiz.items.length;
+    return acc;
+  }, {});
+
+  quizSummary.innerHTML = modules
+    .map((mod) => {
+      const title = lang === "en" ? mod.title_en : mod.title_zh;
+      const count = quizCounts[mod.id] || 0;
+      return `
+        <article class="module-card">
+          <h3>${title}</h3>
+          <div class="module-meta">Questions: ${count}</div>
+        </article>
+      `;
+    })
+    .join("");
+};
+
 const renderCurrentPage = () => {
   const page = document.querySelector("[data-page]");
   if (!page) {
@@ -90,6 +140,10 @@ const renderCurrentPage = () => {
 
   if (page.dataset.page === "path") {
     renderPath();
+  }
+
+  if (page.dataset.page === "assessment") {
+    renderAssessment();
   }
 };
 
