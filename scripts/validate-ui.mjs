@@ -28,6 +28,7 @@ assert.ok(appJs.includes("conceptList"), "Missing conceptList usage");
 assert.ok(appJs.includes("renderPractice("), "Missing renderPractice()");
 assert.ok(appJs.includes("practiceList"), "Missing practiceList usage");
 assert.ok(appJs.includes("renderModule("), "Missing renderModule()");
+assert.ok(appJs.includes("applyI18n("), "Missing applyI18n()");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
@@ -51,5 +52,6 @@ assert.ok(moduleHtml.includes("id=\"moduleDetail\""), "Missing id=\"moduleDetail
 
 const indexHtml = fs.readFileSync("public/index.html", "utf8");
 assert.ok(indexHtml.includes("practice.html"), "Missing practice link in index.html");
+assert.ok(indexHtml.includes("data-i18n="), "Missing data-i18n attributes in index.html");
 
 console.log("OK");

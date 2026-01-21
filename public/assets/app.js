@@ -16,13 +16,6 @@ const updateLanguageToggle = (lang) => {
   });
 };
 
-const setLanguage = (lang) => {
-  localStorage.setItem("lang", lang);
-  document.documentElement.dataset.lang = lang;
-  updateLanguageToggle(lang);
-  renderCurrentPage();
-};
-
 const getRoute = () => {
   return localStorage.getItem("route") || "python";
 };
@@ -37,6 +30,53 @@ const setRoute = (route) => {
   localStorage.setItem("route", route);
   document.documentElement.dataset.route = route;
   updateRouteToggle(route);
+  renderCurrentPage();
+};
+
+const i18n = {
+  zh: {
+    home_title: "循序渐进学习网络爬虫",
+    home_subtitle: "关键概念、练习与项目，配套中英双语。",
+    home_cta: "开始学习",
+    card_concepts_title: "关键概念",
+    card_concepts_desc: "清晰解释、常见误区与术语。",
+    card_exercises_title: "练习",
+    card_exercises_desc: "带输入输出示例的动手任务。",
+    card_projects_title: "小项目",
+    card_projects_desc: "实用型先行，技术型跟进。",
+    card_assessment_title: "评估",
+    card_assessment_desc: "测验、Rubric 与徽章体系。"
+  },
+  en: {
+    home_title: "Learn Web Scraping, Step by Step",
+    home_subtitle: "Concepts, practice, and projects with bilingual support.",
+    home_cta: "Start Learning",
+    card_concepts_title: "Concepts",
+    card_concepts_desc: "Clear explanations, pitfalls, and terms.",
+    card_exercises_title: "Exercises",
+    card_exercises_desc: "Hands-on tasks with input/output examples.",
+    card_projects_title: "Mini Projects",
+    card_projects_desc: "Practical first, technical next.",
+    card_assessment_title: "Assessment",
+    card_assessment_desc: "Quizzes, rubrics, and badges."
+  }
+};
+
+const applyI18n = (lang) => {
+  const dict = i18n[lang] || i18n.zh;
+  document.querySelectorAll("[data-i18n]").forEach((node) => {
+    const key = node.dataset.i18n;
+    if (dict[key]) {
+      node.textContent = dict[key];
+    }
+  });
+};
+
+const setLanguage = (lang) => {
+  localStorage.setItem("lang", lang);
+  document.documentElement.dataset.lang = lang;
+  updateLanguageToggle(lang);
+  applyI18n(lang);
   renderCurrentPage();
 };
 
