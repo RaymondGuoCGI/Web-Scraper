@@ -132,6 +132,62 @@ const renderAssessment = async () => {
     .join("");
 };
 
+const renderConcepts = async () => {
+  const conceptList = document.getElementById("conceptList");
+  if (!conceptList) {
+    return;
+  }
+
+  const modules = await loadJson(["../data/modules.json", "data/modules.json"]);
+  if (!modules) {
+    conceptList.innerHTML = "<div class=\"card\">Failed to load concepts.</div>";
+    return;
+  }
+
+  const lang = getLanguage();
+  conceptList.innerHTML = modules
+    .map((mod) => {
+      const moduleTitle = lang === "en" ? mod.title_en : mod.title_zh;
+      const concepts = mod.concepts || [];
+      const conceptCards = concepts
+        .map((concept) => {
+          const title = lang === "en" ? concept.title_en : concept.title_zh;
+          const summary = lang === "en" ? concept.summary_en : concept.summary_zh;
+          const pitfalls = lang === "en" ? concept.pitfalls_en : concept.pitfalls_zh;
+          const useCases = lang === "en" ? concept.use_cases_en : concept.use_cases_zh;
+          const terms = (concept.terms || [])
+            .map((term) => {
+              const label = lang === "en" ? term.en : term.zh;
+              return `<span class="term">${label}</span>`;
+            })
+            .join("");
+
+          return `
+            <article class="concept-card">
+              <h3>${title}</h3>
+              <p>${summary}</p>
+              <div class="concept-meta">
+                <strong>${lang === "en" ? "Pitfalls" : "常见误区"}:</strong> ${pitfalls}
+              </div>
+              <div class="concept-meta">
+                <strong>${lang === "en" ? "Use cases" : "应用场景"}:</strong> ${useCases}
+              </div>
+              <div class="term-row">${terms}</div>
+            </article>
+          `;
+        })
+        .join("");
+
+      return `
+        <section class="module-section">
+          <h2>${moduleTitle}</h2>
+          <div class="concept-grid">${conceptCards}</div>
+        </section>
+      `;
+    })
+    .join("");
+};
+
 const renderCurrentPage = () => {
   const page = document.querySelector("[data-page]");
   if (!page) {
@@ -144,6 +200,10 @@ const renderCurrentPage = () => {
 
   if (page.dataset.page === "assessment") {
     renderAssessment();
+  }
+
+  if (page.dataset.page === "concepts") {
+    renderConcepts();
   }
 };
 

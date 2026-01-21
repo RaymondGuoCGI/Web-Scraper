@@ -181,3 +181,47 @@ body {
   display: flex;
   gap: 8px;
 }
+.concept-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.module-section h2 {
+  font-family: var(--font-display);
+  margin-bottom: 16px;
+}
+
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.concept-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.concept-meta {
+  margin-top: 10px;
+  color: var(--muted);
+}
+
+.term-row {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.term {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(194, 69, 45, 0.12);
+  color: var(--accent-dark);
+  font-size: 12px;
+}

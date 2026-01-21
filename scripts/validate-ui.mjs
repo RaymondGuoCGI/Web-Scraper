@@ -22,6 +22,7 @@ assert.ok(appJs.includes("setRoute("), "Missing setRoute()");
 assert.ok(appJs.includes("\"route\""), "Missing route localStorage key");
 assert.ok(appJs.includes("renderAssessment("), "Missing renderAssessment()");
 assert.ok(appJs.includes("renderConcepts("), "Missing renderConcepts()");
+assert.ok(appJs.includes("conceptList"), "Missing conceptList usage");
 
 const pathHtml = fs.readFileSync("public/path.html", "utf8");
 assert.ok(pathHtml.includes("data-page=\"path\""), "Missing data-page=\"path\"");
