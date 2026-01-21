@@ -72,11 +72,11 @@ const renderPath = async () => {
     .map((mod) => {
       const title = lang === "en" ? mod.title_en : mod.title_zh;
       return `
-        <article class="module-card">
+        <a class="module-card" href="module.html?id=${mod.id}">
           <h3>${title}</h3>
           <div class="module-meta">${mod.time_estimate}</div>
           <div class="module-meta">${mod.id}</div>
-        </article>
+        </a>
       `;
     })
     .join("");
@@ -258,6 +258,92 @@ const renderConcepts = async () => {
     .join("");
 };
 
+const renderModule = async () => {
+  const moduleDetail = document.getElementById("moduleDetail");
+  if (!moduleDetail) {
+    return;
+  }
+
+  const modules = await loadJson(["../data/modules.json", "data/modules.json"]);
+  if (!modules) {
+    moduleDetail.innerHTML = "<div class=\"card\">Failed to load module.</div>";
+    return;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const moduleId = params.get("id");
+  const moduleData = modules.find((mod) => mod.id === moduleId) || modules[0];
+  if (!moduleData) {
+    moduleDetail.innerHTML = "<div class=\"card\">Module not found.</div>";
+    return;
+  }
+
+  const lang = getLanguage();
+  const moduleTitle = lang === "en" ? moduleData.title_en : moduleData.title_zh;
+  const concepts = moduleData.concepts || [];
+  const exercises = moduleData.exercises || [];
+  const projects = moduleData.projects || [];
+
+  const conceptItems = concepts
+    .map((concept) => {
+      const title = lang === "en" ? concept.title_en : concept.title_zh;
+      const summary = lang === "en" ? concept.summary_en : concept.summary_zh;
+      return `
+        <div class="card">
+          <h3>${title}</h3>
+          <p>${summary}</p>
+        </div>
+      `;
+    })
+    .join("");
+
+  const exerciseItems = exercises
+    .map((ex) => {
+      const title = lang === "en" ? ex.title_en : ex.title_zh;
+      const prompt = lang === "en" ? ex.prompt_en : ex.prompt_zh;
+      return `
+        <div class="card">
+          <h3>${title}</h3>
+          <p>${prompt}</p>
+        </div>
+      `;
+    })
+    .join("");
+
+  const projectItems = projects
+    .map((project) => {
+      const title = lang === "en" ? project.title_en : project.title_zh;
+      const reqs = lang === "en" ? project.requirements_en : project.requirements_zh;
+      const reqItems = (reqs || []).map((item) => `<li>${item}</li>`).join("");
+      return `
+        <div class="card">
+          <h3>${title}</h3>
+          <ul>${reqItems}</ul>
+        </div>
+      `;
+    })
+    .join("");
+
+  moduleDetail.innerHTML = `
+    <section class="module-section">
+      <h2>${moduleTitle}</h2>
+      <div class="module-meta">${moduleData.time_estimate}</div>
+    </section>
+    <section class="module-section">
+      <h3>${lang === "en" ? "Concepts" : "关键概念"}</h3>
+      <div class="concept-grid">${conceptItems}</div>
+    </section>
+    <section class="module-section">
+      <h3>${lang === "en" ? "Exercises" : "练习"}</h3>
+      <div class="concept-grid">${exerciseItems}</div>
+    </section>
+    <section class="module-section">
+      <h3>${lang === "en" ? "Projects" : "项目"}</h3>
+      <div class="concept-grid">${projectItems}</div>
+    </section>
+  `;
+};
+
 const renderCurrentPage = () => {
   const page = document.querySelector("[data-page]");
   if (!page) {
@@ -278,6 +364,10 @@ const renderCurrentPage = () => {
 
   if (page.dataset.page === "practice") {
     renderPractice();
+  }
+
+  if (page.dataset.page === "module") {
+    renderModule();
   }
 };
 

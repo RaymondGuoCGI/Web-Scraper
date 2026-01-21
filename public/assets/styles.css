@@ -260,3 +260,13 @@ body {
   margin: 8px 0 0;
   color: var(--muted);
 }
+.module-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+a.module-card {
+  text-decoration: none;
+  color: inherit;
+}
