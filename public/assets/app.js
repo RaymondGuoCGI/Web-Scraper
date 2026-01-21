@@ -23,6 +23,23 @@ const setLanguage = (lang) => {
   renderCurrentPage();
 };
 
+const getRoute = () => {
+  return localStorage.getItem("route") || "python";
+};
+
+const updateRouteToggle = (route) => {
+  document.querySelectorAll(".toggle[data-route]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.route === route);
+  });
+};
+
+const setRoute = (route) => {
+  localStorage.setItem("route", route);
+  document.documentElement.dataset.route = route;
+  updateRouteToggle(route);
+  renderCurrentPage();
+};
+
 const loadJson = async (paths) => {
   for (const path of paths) {
     try {
@@ -77,10 +94,17 @@ const renderCurrentPage = () => {
 };
 
 ready(() => {
+  const initialRoute = getRoute();
+  setRoute(initialRoute);
+
   const initialLang = getLanguage();
   setLanguage(initialLang);
 
   document.querySelectorAll(".toggle[data-lang]").forEach((btn) => {
     btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+  });
+
+  document.querySelectorAll(".toggle[data-route]").forEach((btn) => {
+    btn.addEventListener("click", () => setRoute(btn.dataset.route));
   });
 });
