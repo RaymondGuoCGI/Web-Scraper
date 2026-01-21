@@ -143,5 +143,147 @@
         ]
       }
     ]
+  },
+  {
+    "id": "parsing-cleaning",
+    "title_zh": "解析与清洗",
+    "title_en": "Parsing and Cleaning",
+    "time_estimate": "3-4 hours",
+    "concepts": [
+      {
+        "id": "dom-selectors",
+        "title_zh": "DOM 选择器",
+        "title_en": "DOM Selectors",
+        "summary_zh": "使用 CSS 选择器定位目标元素。",
+        "summary_en": "Use CSS selectors to locate target elements.",
+        "pitfalls_zh": "选择器过于脆弱，页面微调就失效。",
+        "pitfalls_en": "Brittle selectors break with small layout changes.",
+        "use_cases_zh": "提取标题、列表、表格数据。",
+        "use_cases_en": "Extract titles, lists, and tables.",
+        "terms": [
+          { "zh": "选择器", "en": "selector" }
+        ]
+      },
+      {
+        "id": "data-normalization",
+        "title_zh": "数据清洗与归一化",
+        "title_en": "Cleaning and Normalization",
+        "summary_zh": "统一空格、单位、日期格式。",
+        "summary_en": "Normalize whitespace, units, and dates.",
+        "pitfalls_zh": "忽略异常值会污染数据。",
+        "pitfalls_en": "Ignoring outliers contaminates datasets.",
+        "use_cases_zh": "为分析与存储做准备。",
+        "use_cases_en": "Prepare data for analysis and storage.",
+        "terms": [
+          { "zh": "归一化", "en": "normalization" }
+        ]
+      }
+    ],
+    "exercises": [
+      {
+        "id": "css-selector-basics",
+        "title_zh": "选择器练习",
+        "title_en": "Selector Practice",
+        "prompt_zh": "从给定 HTML 中提取课程标题列表。",
+        "prompt_en": "Extract course titles from given HTML.",
+        "input_example": "<ul><li class=\"course\">A</li></ul>",
+        "output_example": "[\"A\"]",
+        "hints_zh": "尽量避免使用过长的层级选择器。",
+        "hints_en": "Avoid overly deep selectors."
+      },
+      {
+        "id": "clean-whitespace",
+        "title_zh": "清理空白字符",
+        "title_en": "Clean Whitespace",
+        "prompt_zh": "去除多余空格并统一换行。",
+        "prompt_en": "Remove extra spaces and normalize newlines.",
+        "input_example": "\"  Hello\n\nWorld \"",
+        "output_example": "\"Hello\nWorld\"",
+        "hints_zh": "先 trim，再合并连续空格。",
+        "hints_en": "Trim first, then collapse whitespace."
+      }
+    ],
+    "projects": [
+      {
+        "id": "job-listing-cleaner",
+        "type": "practical",
+        "title_zh": "职位数据清洗",
+        "title_en": "Job Listing Cleaner",
+        "requirements_zh": [
+          "抓取职位标题、公司、地点",
+          "统一薪资区间格式",
+          "输出为 CSV"
+        ],
+        "requirements_en": [
+          "Fetch title, company, location",
+          "Normalize salary ranges",
+          "Export CSV"
+        ],
+        "acceptance_zh": [
+          "字段完整且格式一致",
+          "至少 50 条记录"
+        ],
+        "acceptance_en": [
+          "Complete fields with consistent format",
+          "At least 50 records"
+        ],
+        "challenges_zh": [
+          "薪资单位不统一",
+          "地点包含多级信息"
+        ],
+        "challenges_en": [
+          "Inconsistent salary units",
+          "Multi-level locations"
+        ],
+        "extensions_zh": [
+          "添加关键词过滤",
+          "支持导入数据库"
+        ],
+        "extensions_en": [
+          "Add keyword filtering",
+          "Support database import"
+        ]
+      },
+      {
+        "id": "structured-extraction",
+        "type": "technical",
+        "title_zh": "结构化抽取",
+        "title_en": "Structured Extraction",
+        "requirements_zh": [
+          "对列表页与详情页做关联",
+          "使用稳定选择器与备用方案",
+          "记录解析失败的页面"
+        ],
+        "requirements_en": [
+          "Link list and detail pages",
+          "Use stable selectors with fallbacks",
+          "Log pages that fail parsing"
+        ],
+        "acceptance_zh": [
+          "解析失败率低于 5%",
+          "日志可追溯"
+        ],
+        "acceptance_en": [
+          "Parse failure rate under 5%",
+          "Traceable logs"
+        ],
+        "challenges_zh": [
+          "页面结构差异",
+          "字段缺失"
+        ],
+        "challenges_en": [
+          "Varying page structures",
+          "Missing fields"
+        ],
+        "extensions_zh": [
+          "加入规则测试用例",
+          "输出抽取质量报告"
+        ],
+        "extensions_en": [
+          "Add rule test cases",
+          "Output extraction quality report"
+        ]
+      }
+    ]
   }
 ]

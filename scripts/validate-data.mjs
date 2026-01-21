@@ -38,4 +38,32 @@ for (const mod of modules) {
   assert.ok(Array.isArray(mod.projects), "projects must be array");
 }
 
+assert.ok(modules.length >= 2, "Expected at least 2 modules");
+
+const moduleIds = new Set(modules.map((m) => m.id));
+
+const quizzes = readJson("data/quizzes.json");
+assert.ok(Array.isArray(quizzes), "quizzes.json must be an array");
+for (const quiz of quizzes) {
+  assert.ok(quiz.module_id, "Quiz missing module_id");
+  assert.ok(moduleIds.has(quiz.module_id), `Unknown module_id: ${quiz.module_id}`);
+}
+
+const rubrics = readJson("data/rubrics.json");
+assert.ok(rubrics && typeof rubrics === "object", "rubrics.json must be an object");
+assert.ok(Array.isArray(rubrics.dimensions), "rubrics.dimensions must be an array");
+
+const requiredDimensions = [
+  "completion",
+  "structure",
+  "robustness",
+  "data_quality",
+  "documentation"
+];
+
+const dimensionIds = new Set(rubrics.dimensions.map((d) => d.id));
+for (const dim of requiredDimensions) {
+  assert.ok(dimensionIds.has(dim), `Missing rubric dimension: ${dim}`);
+}
+
 console.log("OK");

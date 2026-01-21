@@ -1,2 +1,72 @@
 [
+  {
+    "module_id": "fundamentals",
+    "items": [
+      {
+        "id": "f1",
+        "question_zh": "状态码 200 表示什么？",
+        "question_en": "What does status code 200 mean?",
+        "options_zh": ["请求成功", "资源不存在", "服务器错误", "被重定向"],
+        "options_en": ["Request succeeded", "Not found", "Server error", "Redirected"],
+        "answer": 0,
+        "explanation_zh": "200 表示请求成功并返回内容。",
+        "explanation_en": "200 indicates a successful request."
+      },
+      {
+        "id": "f2",
+        "question_zh": "Content-Type 的作用是？",
+        "question_en": "What is the purpose of Content-Type?",
+        "options_zh": ["标记内容类型", "设置请求频率", "缓存数据", "设置编码"],
+        "options_en": ["Describe content type", "Set crawl rate", "Cache data", "Set encoding"],
+        "answer": 0,
+        "explanation_zh": "它告诉客户端返回的内容类型。",
+        "explanation_en": "It describes the returned content type."
+      },
+      {
+        "id": "f3",
+        "question_zh": "robots.txt 的核心作用是？",
+        "question_en": "What is the core purpose of robots.txt?",
+        "options_zh": ["合规提示", "绕过限制", "加速爬取", "隐藏数据"],
+        "options_en": ["Compliance guidance", "Bypass limits", "Speed up crawling", "Hide data"],
+        "answer": 0,
+        "explanation_zh": "它是站点给爬虫的合规提示。",
+        "explanation_en": "It provides compliance guidance for crawlers."
+      }
+    ]
+  },
+  {
+    "module_id": "parsing-cleaning",
+    "items": [
+      {
+        "id": "p1",
+        "question_zh": "CSS 选择器主要用于？",
+        "question_en": "CSS selectors are mainly used to?",
+        "options_zh": ["定位元素", "缓存页面", "发送请求", "合并数据"],
+        "options_en": ["Locate elements", "Cache pages", "Send requests", "Merge data"],
+        "answer": 0,
+        "explanation_zh": "选择器用于定位 DOM 元素。",
+        "explanation_en": "Selectors locate DOM elements."
+      },
+      {
+        "id": "p2",
+        "question_zh": "数据清洗的目的之一是？",
+        "question_en": "One goal of data cleaning is?",
+        "options_zh": ["统一格式", "增加请求量", "隐藏字段", "绕过限制"],
+        "options_en": ["Normalize formats", "Increase requests", "Hide fields", "Bypass limits"],
+        "answer": 0,
+        "explanation_zh": "清洗让数据一致可用。",
+        "explanation_en": "Cleaning makes data consistent."
+      },
+      {
+        "id": "p3",
+        "question_zh": "为什么要准备备用选择器？",
+        "question_en": "Why prepare fallback selectors?",
+        "options_zh": ["页面结构变化", "提高速度", "减少字段", "增加并发"],
+        "options_en": ["Layout changes", "Improve speed", "Reduce fields", "Increase concurrency"],
+        "answer": 0,
+        "explanation_zh": "页面变化时可保持稳定解析。",
+        "explanation_en": "They keep parsing stable when layout changes."
+      }
+    ]
+  }
 ]

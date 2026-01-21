@@ -1,3 +1,64 @@
 {
-  "dimensions": []
+  "dimensions": [
+    {
+      "id": "completion",
+      "title_zh": "需求完成度",
+      "title_en": "Requirement Completion",
+      "levels": [
+        { "score": 0, "desc_zh": "未完成核心需求", "desc_en": "Core requirements missing" },
+        { "score": 1, "desc_zh": "完成不足一半", "desc_en": "Less than half complete" },
+        { "score": 2, "desc_zh": "完成主要需求", "desc_en": "Most requirements met" },
+        { "score": 3, "desc_zh": "完成全部需求", "desc_en": "All requirements met" },
+        { "score": 4, "desc_zh": "超出需求并有扩展", "desc_en": "Beyond requirements with extensions" }
+      ]
+    },
+    {
+      "id": "structure",
+      "title_zh": "结构与可维护性",
+      "title_en": "Structure & Maintainability",
+      "levels": [
+        { "score": 0, "desc_zh": "结构混乱", "desc_en": "Disorganized structure" },
+        { "score": 1, "desc_zh": "结构可用但混乱", "desc_en": "Usable but messy" },
+        { "score": 2, "desc_zh": "结构清晰", "desc_en": "Clear structure" },
+        { "score": 3, "desc_zh": "结构清晰且可扩展", "desc_en": "Clear and extensible" },
+        { "score": 4, "desc_zh": "优秀的模块化设计", "desc_en": "Excellent modular design" }
+      ]
+    },
+    {
+      "id": "robustness",
+      "title_zh": "鲁棒性与反爬处理",
+      "title_en": "Robustness & Anti-scraping",
+      "levels": [
+        { "score": 0, "desc_zh": "无错误处理", "desc_en": "No error handling" },
+        { "score": 1, "desc_zh": "少量错误处理", "desc_en": "Minimal error handling" },
+        { "score": 2, "desc_zh": "基本重试与限速", "desc_en": "Basic retry and throttling" },
+        { "score": 3, "desc_zh": "稳定处理常见失败", "desc_en": "Stable handling of common failures" },
+        { "score": 4, "desc_zh": "完善的鲁棒性策略", "desc_en": "Comprehensive robustness strategy" }
+      ]
+    },
+    {
+      "id": "data_quality",
+      "title_zh": "数据质量",
+      "title_en": "Data Quality",
+      "levels": [
+        { "score": 0, "desc_zh": "大量缺失或错误", "desc_en": "Many missing or wrong fields" },
+        { "score": 1, "desc_zh": "部分字段可用", "desc_en": "Some usable fields" },
+        { "score": 2, "desc_zh": "字段完整但清洗不足", "desc_en": "Complete fields, limited cleaning" },
+        { "score": 3, "desc_zh": "字段完整且清洗良好", "desc_en": "Complete and well cleaned" },
+        { "score": 4, "desc_zh": "高质量且一致性强", "desc_en": "High quality and consistent" }
+      ]
+    },
+    {
+      "id": "documentation",
+      "title_zh": "文档与复现",
+      "title_en": "Documentation & Reproducibility",
+      "levels": [
+        { "score": 0, "desc_zh": "无文档", "desc_en": "No documentation" },
+        { "score": 1, "desc_zh": "文档不足", "desc_en": "Insufficient documentation" },
+        { "score": 2, "desc_zh": "文档可用", "desc_en": "Usable documentation" },
+        { "score": 3, "desc_zh": "文档完整", "desc_en": "Complete documentation" },
+        { "score": 4, "desc_zh": "文档清晰且可复现", "desc_en": "Clear and reproducible" }
+      ]
+    }
+  ]
 }
